@@ -51,13 +51,36 @@ It also contains the `templates` folder which should contain latex templates to 
 
 ### Cuts
 
-All cuts should go into .py files in the folder `python/cuts/`. Mainly into `__init__.py`
+All cuts should go into .py files in the folder `python/B2KTauMu/cuts/`. Mainly into `__init__.py`
 These can be then used as e.g. :
 
-```from B2KTauMu import *
+```import B2KTauMu.cuts as cuts
 data.Draw('Somevar',cuts.somecut)```
 
-See also paragraph after.
+See also python environment paragraph.
+
+### Access data
+
+Raw data (the output of the stripping) can be accessed using a provided function:
+
+```from B2KTauMu.getdata import get_data
+print get_data('CL11')
+{'B2KMuTau_pmpTuple': <ROOT.TChain object ("B2KMuTau_pmpTuple/DecayTree") at 0x5f965d0>, 'B2KMuTau_ppmTuple': <ROOT.TChain object ("B2KMuTau_ppmTuple/DecayTree") at 0x5fa5c00>, 'GetIntegratedLuminosity': <ROOT.TChain object ("GetIntegratedLuminosity/LumiTuple") at 0x5faad50>}
+```
+
+To see the available datasets: 
+
+```
+import B2KTauMu as an
+print an.dataids.keys()
+['CL16', 'CL15', 'CL12', 'CL11']
+```
+
+To know more info about the physical location of the files and which tuples they contain:
+
+```
+print an.getdata.inspect('CL11')
+```
 
 ### B2KTauMu python environment (important!!)
 
