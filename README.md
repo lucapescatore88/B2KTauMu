@@ -82,7 +82,7 @@ To know more info about the physical location of the files and which tuples they
 print an.getdata.inspect('CL11')
 ```
 
-### B2KTauMu python environment (important!!)
+## B2KTauMu python environment (important!!)
 
 This module loads the python environment: `import B2KTauMuEnv as an`.
 
