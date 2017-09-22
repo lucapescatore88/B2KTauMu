@@ -1,7 +1,7 @@
 ## What is this repository
 ------
 
-This is a repository containing code for the analyis of the LFV B2Ktaumu decay.
+This is a repository containing code for the analyis of the LFV B2KTauMu decay.
 
 Contact: luca.pescatore@cern.ch, giulio.dujany@cern.ch
 
@@ -28,7 +28,7 @@ Please read README_SNAKEMAKE.
 * The `B2KTAUMUROOT` variable is now avilable pointing to the top folder of the repo.
 * ROOT, matplotlib, sklearn, etc are setup.
 * Now code into the `python` folder should be automatically picked up if you try to import it.
-* At the beginning of each python file you should add `from B2KTauMuEnv import *` (see later)
+* At the beginning of each python file you should add `import B2KTauMu as an` (see later)
 
 
 ## Repository Structure
@@ -59,15 +59,17 @@ data.Draw('Somevar',cuts.somecut)```
 
 See also paragraph after.
 
-### B2KTauMuEnv (important!!)
+### B2KTauMu python environment (important!!)
 
-This module loads the python environment: `from B2KTauMuEnv import *`.
+This module loads the python environment: `import B2KTauMuEnv as an`.
 
 What will this do for you:
 
 * Checking that you sourced the setup.sh file.
 
 * Loading the LHCb style for plots.
+
+* Make available any variable defined into B2KTauMu/__init__.py (e.g. se next point: loc)
 
 * Make the locations easily available to your pathon scripts though the `loc` object. Sone already defined locations are the following (feel free to define more as you need them):
 
@@ -79,43 +81,43 @@ What will this do for you:
     - loc.TMPS   = $LB2LEMUANAROOT/tables/templates/
     - loc.TUPLE  = /eos/lhcb/user/p/pluca/Analysis/B2KTauMu/Tuple/
 
-* Provide a common database saved on disk (still needs handling of more people working at same time), e.g.:.
+* Provide a common database saved on disk to presist results, e.g.:.
 
 ```
-from B2KTauMuEnv import *
-print db
+import B2KTauMuEnv as an
+print an.db
 {'Test':True, ...}
-db['myeff'] = 0.99
+an.db['myeff'] = 0.99
 dumpDB() ## Saves it to disk
 ```
 
 * Provide easy handling of output files, e.g.:
 
+Create a file (only the first time)
 ```
-from B2KTauMuEnv import *
-outfiles.create("yields") ## Will create the $LB2LEMUROOT/tables/yields.txt file and remember that it exists (only first time) 
-outfile.writeline("yields","N_B0 = 4000")
+import B2KTauMuEnv as an
+an.outfiles.create("yields")                ## Will create the $B2KTAUMUROOT/tables/yields.txt
+outfile.writeline("yields","N_B0 = 4000")   ## Now you can write stuff into it or... (see following)
 ```
 
 Or even better use templates!!!
 
-   - Crate a file in the templates folder. You can write whatever you want into it just put the values to substitute into {}
+   - Crate a .tmp file in the tables/templates folder. You can write whatever you want into it just put the values to substitute into {}
    
    E.g.
    ```
-   seleff = ${sel_eff} \pm {sel_eff_err}$
+   yield_signal = ${yield_sig} \pm {yield_sig_err}$
    ```
    
-   And then use the `db` object to fill it!!
+   And then fill it! (Will take by defulta the values saved in an.db)
 
 ```
-from B2KTauMuEnv import *
-outfile.fill_template("efficiencies","eff_tmp",db)
+import B2KTauMuEnv as an
+an.outfile.fill_template("efficiencies","eff_tmp")
 ```
   
   This will look for the keys into the db, fill them into your template and same everything to $REPO/tables/efficiency.txt
 
-* Make available to every script any other variable you wish to define into B2KTauMu.py. 
 
 
 ### Snakemake

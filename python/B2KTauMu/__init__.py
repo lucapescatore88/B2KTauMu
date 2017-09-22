@@ -82,7 +82,7 @@ class Outfiles :
         f.write(text)
         f.close()
 
-    def fill_template(self,name,template,dic) :
+    def fill_template(self,name,template,dic = db) :
         
         tmp = open(loc.TMPS+template)
         
@@ -105,10 +105,3 @@ class Outfiles :
 
 outfiles = Outfiles()
 
-
-__importables__ = [
-            'cuts'
-            ]
-
-#for importable in __importables__:
-#    exec '{0} = r.{0}'.format(importable)
