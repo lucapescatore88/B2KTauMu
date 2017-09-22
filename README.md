@@ -65,22 +65,17 @@ Raw data (the output of the stripping) can be accessed using a provided function
 
 ```from B2KTauMu.getdata import get_data
 print get_data('CL11')
-{'B2KMuTau_pmpTuple': <ROOT.TChain object ("B2KMuTau_pmpTuple/DecayTree") at 0x5f965d0>, 'B2KMuTau_ppmTuple': <ROOT.TChain object ("B2KMuTau_ppmTuple/DecayTree") at 0x5fa5c00>, 'GetIntegratedLuminosity': <ROOT.TChain object ("GetIntegratedLuminosity/LumiTuple") at 0x5faad50>}
-```
+{'B2KMuTau_pmpTuple': <ROOT.TChain object ("B2KMuTau_pmpTuple/DecayTree") at 0x5f965d0>, 'B2KMuTau_ppmTuple': <ROOT.TChain object ("B2KMuTau_ppmTuple/DecayTree") at 0x5fa5c00>, 'GetIntegratedLuminosity': <ROOT.TChain object ("GetIntegratedLuminosity/LumiTuple") at 0x5faad50>}```
 
 To see the available datasets: 
 
-```
-import B2KTauMu as an
+```import B2KTauMu as an
 print an.dataids.keys()
-['CL16', 'CL15', 'CL12', 'CL11']
-```
+['CL16', 'CL15', 'CL12', 'CL11']```
 
 To know more info about the physical location of the files and which tuples they contain:
 
-```
-print an.getdata.inspect('CL11')
-```
+```print an.getdata.inspect('CL11')```
 
 ## B2KTauMu python environment (important!!)
 
