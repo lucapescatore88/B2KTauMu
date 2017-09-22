@@ -3,9 +3,7 @@
 
 This is a repository containing code for the analyis of the LFV B2Ktaumu decay.
 
-_Analysts: F. Archilli, G. Dujani, L. Pescatore, F. Polci, J. Serrano_
-
-Contact: luca.pescatore@cern.ch
+Contact: luca.pescatore@cern.ch, giulio.dujany@cern.ch
 
 ## How to setup the repository
 ------
