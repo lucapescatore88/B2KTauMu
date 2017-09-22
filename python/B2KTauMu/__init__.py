@@ -9,6 +9,7 @@ if os.getenv('B2KTAUMUROOT') is None :
 
 import ROOT
 import cuts
+import getdata as data
 
 repo = os.getenv('B2KTAUMUROOT')
 ROOT.gROOT.ProcessLine('.x '+repo+'/LHCb/lhcbStyle.C')
@@ -105,4 +106,9 @@ class Outfiles :
 outfiles = Outfiles()
 
 
+__importables__ = [
+            'cuts'
+            ]
 
+#for importable in __importables__:
+#    exec '{0} = r.{0}'.format(importable)

@@ -1,21 +1,22 @@
 from ROOT import *
 from glob import glob
-from B2KTauMuEnv import *
+import B2KTauMu as an
 import subprocess
+import os
 
 def inspect(nametag) :
 
-    if nametag not in dataids.keys() :
+    if nametag not in an.dataids.keys() :
         print "No nametag", nametag
         return
 
     listoffiles = []
-    for cid in dataids[nametag][1] :
-        jdir = "{root}/{jid}".format(root=dataids[nametag][0],jid=cid)
+    for cid in an.dataids[nametag][1] :
+        jdir = "{root}/{jid}".format(root=an.dataids[nametag][0],jid=cid)
         pattern = jdir+"/*/DVNtuple.root"
 
         print "Fetching data from", pattern
-        if 'lxplus' in os.getenv('HOSTNAME'): listoffiles += glob.glob(pattern)
+        if 'lxplus' in os.getenv('HOSTNAME'): listoffiles += glob(pattern)
         else:
             try:
                 cmd = 'xrdfs root://eoslhcb.cern.ch/ ls {0}/'.format(jdir)
