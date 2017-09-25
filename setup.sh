@@ -11,6 +11,7 @@ if [ "$1" = "snake" ]; then
 elif [[ $HOSTNAME != *"vm"* ]]; then #if I run on the virtual machine I want my own ROOT and python environment
     echo "Setup without snakemake"
     source $B2KTAUMUROOT/scripts/setup_path.sh
+    source $B2KTAUMUROOT/scripts/setup_venv.sh
 elif [[ $HOSTNAME == *"vm"* ]]; then
     echo "Setup without snakemake on Guido's VM"
     source $B2KTAUMUROOT/scripts/setup_path_guido.sh
