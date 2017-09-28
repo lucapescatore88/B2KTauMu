@@ -1,9 +1,6 @@
 ## Define root variable
 export B2KTAUMUROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-## Setup the submodules
-#source $B2KTAUMUROOT/tools-easyanalysis/setup.sh
-
 ## Setup with Snakemake or without
 if [ "$1" = "snake" ]; then
     echo "Setup with snakemake"
@@ -17,11 +14,12 @@ elif [[ $HOSTNAME == *"vm"* ]]; then
     source $B2KTAUMUROOT/scripts/setup_path_guido.sh
 fi
 
-export PYTHONPATH=$B2KTAUMUROOT:$LCANAROOT:$B2KTAUMUROOT/Option:$B2KTAUMUROOT/Ganga:$B2KTAUMUROOT/python:$PYTHONPATH
+#source $B2KTAUMUROOT/pyutils/setup.sh
+
+export PYTHONPATH=$B2KTAUMUROOT:$B2KTAUMUROOT/Option:$B2KTAUMUROOT/Ganga:$B2KTAUMUROOT/python:$PYTHONPATH
 
 # Locations
 
-export PYTHONPATH=$B2KTAUMUROOT/python:$PYTHONPATH
 export LUCAANAEOSLOC=/eos/lhcb/user/p/pluca/Analysis/
 export RAPIDSIM_ROOT=$B2KTAUMUROOT/RapidSim
 

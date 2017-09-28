@@ -1,0 +1,3 @@
+[submodule "pyutils"]
+	path = pyutils
+	url = ssh://git@gitlab.cern.ch:7999/LHCb-RD/pyutils.git
