@@ -55,7 +55,7 @@ def dumpDB() :
     pickle.dump(db,open(loc.LHCB+"db.pkl","w"))
 
 
-from utils.formatter import PartialFormatter as Formatter
+from pyutils.editing.formatter import PartialFormatter as Formatter
 
 class Outfiles :
 
