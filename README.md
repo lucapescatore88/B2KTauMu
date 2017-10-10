@@ -1,12 +1,10 @@
 ## What is this repository
-------
 
 This is a repository containing code for the analyis of the LFV B2KTauMu decay.
 
 Contact: luca.pescatore@cern.ch, giulio.dujany@cern.ch
 
 ## How to setup the repository
-------
 
 Clone the repository.
 
@@ -32,7 +30,6 @@ Please read README_SNAKEMAKE.
 
 
 ## Repository Structure
-------
 
 * The analysis code should be contained into the `scripts` and `python` folders.
 
@@ -152,8 +149,7 @@ snakemake
 
 
 ## Common utilities
-------
 
-The `python/utils` folder contains utilities which you may find useful. See python/utils/README.md.
+The `pyutils` folder contains utilities which you may find useful. See pyutils/README.md.
 
 
