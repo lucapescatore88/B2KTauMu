@@ -7,7 +7,7 @@ sys.path.append(os.getcwd())
 
 from DV_Routines import set_branches
 from DV_RelatedInfo import getLoKiTool
-from DV_DecayTuple import TupTmp, TupTmpMC
+from DV_DecayTuple import TupTmp, TupTmpMC, TupTmpNorm
 from DV_Config import ConfigDaVinci
 from DB import decays_db
 
@@ -16,28 +16,14 @@ from GaudiKernel.SystemOfUnits import *
 from Configurables import TupleToolDecay
 from Configurables import DeterministicPrescaler
 
-######################################################################
-
-
-#from DV_Routines import ReStrip
-#lines_to_restrip = [ 
-#        'StrippingBu2LLK_meLine',
-#        'StrippingBu2LLK_meSSLine',
-#        'StrippingBu2LLK_eeLine',
-#        'StrippingBu2LLK_mmLine'
-#        ]
-#
-#restrip, restripSq = ReStrip(lines_to_restrip,["Bu2LLK"],['Leptonic'])
-
 #####################################################################
 #
 # Define DecayTreeTuple tuple
 #
 ######################################################################
 
-#branches = ["B","H","tau","pi1","pi2","pi3","mu"]
-branchesX = ["B","H","K","mu","tau","pi1","pi2","pi3"]
-#branchesX = ["B","K","mu","tau","pi1","pi2","pi3"]
+branches = ["B","H","K","mu","tau","pi1","pi2","pi3"]
+branchesNorm = ["B","D0","K","pi","D","K1","K2","piD"]
 
 algs = []
 
@@ -46,9 +32,10 @@ def setalgs(isMC=False,decay='LEPTONIC') :
     global TupTmp, TupTmpMC
     if isMC : TupTmp = TupTmpMC
         
-    linePi = "LFVB2PiTauMuLine"
-    lineK  = "LFVB2KTauMuLine"
-    lineXK = "B2XTauMu_K_3pi_looseLine"
+    linePi  = "LFVB2PiTauMuLine"
+    lineK   = "LFVB2KTauMuLine"
+    lineXK  = "B2XTauMu_K_3pi_looseLine"
+    lineDDs = "B2D0DBeauty2CharmLine" 
     
     #if decay.replace('Filtered_','') in ['Lb_Lee','Lb_Lemu','Lb_Lmm','Bd_Ksee','Bd_Ksmm']:
     #    branches_MC     = branchesRareMC
@@ -75,31 +62,33 @@ def setalgs(isMC=False,decay='LEPTONIC') :
     #LFVB2KTauMuLine.B.ToolList += ["LoKi::Hybrid::TupleTool/LoKi_ToolK"]
     #LFVB2KTauMuLine.B.addTool(LoKi_ToolK)
 
-    #B2heMuTuple = TupTmp.clone("B2heMuTuple")
-    #B2heMuTuple.Inputs   = [ 'Phys/LFVB2heMuLine/Particles' ]
-    #B2heMuTuple.Decay    = "[B+ -> K+ e+ mu-]CC"
-    #B2KTauMuSSTuple.Branches = set_branches(B2KTauMuSSTuple.Decay,branches)
+    B2KTauMuLine_ppm = TupTmp.clone("B2KMuTau_ppmTuple")
+    B2KTauMuLine_ppm.Inputs   = [ inputname.format(lineXK) ]
+    B2KTauMuLine_ppm.Decay    = "[B+ -> ^(Delta(1600)++ -> ^K+ ^mu+) ^(tau- -> ^pi- ^pi+ ^pi-)]CC"
+    B2KTauMuLine_ppm.Branches = set_branches(B2KTauMuLine_ppm.Decay,branches)
+    LoKi_Tool1 = getLoKiTool("1",lineXK,isMC,branch=B2KTauMuLine_ppm.B)
     
-    XB2KTauMuLine_ppm = TupTmp.clone("B2KMuTau_ppmTuple")
-    XB2KTauMuLine_ppm.Inputs   = [ inputname.format(lineXK) ]
-    XB2KTauMuLine_ppm.Decay    = "[B+ -> ^(Delta(1600)++ -> ^K+ ^mu+) ^(tau- -> ^pi- ^pi+ ^pi-)]CC"
-    XB2KTauMuLine_ppm.Branches = set_branches(XB2KTauMuLine_ppm.Decay,branchesX)
-    LoKi_Tool1 = getLoKiTool("1",lineXK,isMC,branch=XB2KTauMuLine_ppm.B)
+    B2KTauMuLine_pmp = TupTmp.clone("B2KMuTau_pmpTuple")
+    B2KTauMuLine_pmp.Inputs   = [ inputname.format(lineXK) ]
+    B2KTauMuLine_pmp.Decay    = "[B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
+    B2KTauMuLine_pmp.Branches = set_branches(B2KTauMuLine_pmp.Decay,branches)
+    LoKi_Tool2 = getLoKiTool("2",lineXK,isMC,branch=B2KTauMuLine_pmp.B)
     
-    XB2KTauMuLine_pmp = TupTmp.clone("B2KMuTau_pmpTuple")
-    XB2KTauMuLine_pmp.Inputs   = [ inputname.format(lineXK) ]
-    XB2KTauMuLine_pmp.Decay    = "[B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
-    XB2KTauMuLine_pmp.Branches = set_branches(XB2KTauMuLine_pmp.Decay,branchesX)
-    LoKi_Tool2 = getLoKiTool("2",lineXK,isMC,branch=XB2KTauMuLine_pmp.B)
-    
-    XB2KTauMuLine_SS = TupTmp.clone("B2KMuTau_SSTuple")
-    XB2KTauMuLine_SS.Inputs   = [ inputname.format(lineXK) ]
-    XB2KTauMuLine_SS.Decay    = "[B+ -> ^(K*(1410)0 -> ^K- ^mu+) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
-    XB2KTauMuLine_SS.Branches = set_branches(XB2KTauMuLine_SS.Decay,branchesX)
-    LoKi_Tool3 = getLoKiTool("3",lineXK,isMC,branch=XB2KTauMuLine_SS.B)
+    B2KTauMuLine_SS = TupTmp.clone("B2KMuTau_SSTuple")
+    B2KTauMuLine_SS.Inputs   = [ inputname.format(lineXK) ]
+    B2KTauMuLine_SS.Decay    = "[B+ -> ^(K*(1410)0 -> ^K- ^mu+) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
+    B2KTauMuLine_SS.Branches = set_branches(B2KTauMuLine_SS.Decay,branches)
+    LoKi_Tool3 = getLoKiTool("3",lineXK,isMC,branch=B2KTauMuLine_SS.B)
+
+    B2DDs = TupTmpNorm.clone("B2DDs_Kpi_Kpipi")
+    B2DDs.Inputs   = [ inputname.format(lineDDs) ]
+    B2DDs.Decay    = "[ B+ -> ^(D0 -> ^K- ^pi+) ^(D+ -> ^K+ ^K- ^pi+) ]CC"
+    B2DDs.Branches = set_branches(B2DDs.Decay,branchesNorm)
+    LoKi_Tool4 = getLoKiTool("4",lineDDs,isMC,branch=B2DDs.B)
+ 
 
     global algs
-    algs = [ XB2KTauMuLine_ppm, XB2KTauMuLine_pmp, XB2KTauMuLine_SS, LFVB2PiTauMuLine, LFVB2KTauMuLine ]
+    algs = [ B2KTauMuLine_ppm, B2KTauMuLine_pmp, B2KTauMuLine_SS, B2DDs ]
 
     if not isMC : return
     
@@ -111,4 +100,4 @@ def setalgs(isMC=False,decay='LEPTONIC') :
     MCTuple.Decay    = '({0})'.format(decays_db[decay.replace('Filtered_', '')]['descriptor'])
     MCTuple.Branches = set_branches(MCTuple.Decay,branchesX)
     algs += [ MCTuple ]
-     
+    

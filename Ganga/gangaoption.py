@@ -107,10 +107,13 @@ def SubmitS28() :
 def SubmitAll(datatype = 'CL', years=[], mags = ['MU','MD'], decays = [], test = False) :
 
     if datatype == 'CL' :
-        if years == []: years = ['11','12','15_S24r0p1','16_S28'] # Default years for data: all
+        #if years == []: years = ['11','12','15_S24r0p1','16_S28'] # Default years for data: all
+        if years == []: years = ['11','12','15_S24','16_S28']
         for year in years :
             for mag in mags :
-                j = CreateJob(datatype,'LEPTONIC',year,mag,test)
+                #j = CreateJob(datatype,'LEPTONIC',year,mag,test)
+                j = CreateJob(datatype,'BHADRON',year,mag,test)
+                print j
                 queues.add(j.submit)
     else :
         print "Submit MC"

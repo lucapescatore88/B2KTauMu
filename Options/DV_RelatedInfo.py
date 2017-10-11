@@ -2,10 +2,18 @@ from Gaudi.Configuration       import *
 from GaudiKernel.SystemOfUnits import *
 from Configurables import LoKi__Hybrid__TupleTool
 
-def getLoKiToolsDictionary():
+def getLoKiToolsDictionary(t = ''):
 
     reldict = {'RELINFO':{}}
-    myvars = {
+
+    if 'D0DBeauty' in t :
+        myvars = {
+        #add RelInfoConeVariables
+        'cone' : {'vars' : ['CONEANGLE', 'CONEMULT', 'CONEPTASYM'],
+                  'locations' : ['P2ConeVar1','P2ConeVar2','P2ConeVar3'] }
+        }
+    else : 
+        myvars = {
         #add RelInfoConeVariables
         'cone' : {'vars' : ['CONEANGLE', 'CONEMULT', 'CONEPTASYM','CONEPT','CONEP','CONEPASYM','CONEDELTAETA','CONEDELTAPHI'],
                   'locations' : ['ConeVarsInfoL1','ConeVarsInfoL2','ConeVarsInfoH'] },
@@ -24,26 +32,29 @@ def getLoKiToolsDictionary():
         for var in vardict['vars'] :
             for loc in vardict['locations'] :
                 reldict['RELINFO'][loc+"_"+var] = {'varName':var,'Location':loc,'Default':-1.}
+    
+    if 'D0DBeauty' not in t : 
+        #add RelInfoVertexIsolation
+        for v in [ 'VTXISONUMVTX', 'VTXISODCHI2ONETRACK', 'VTXISODCHI2MASSONETRACK', 'VTXISODCHI2TWOTRACK', 'VTXISODCHI2MASSTWOTRACK']:
+            reldict['RELINFO']['VtxIso_'+v] = {'varName':v,'Location':'VertexIsoInfo','Default':-1}
 
-    #add RelInfoVertexIsolation
-    for v in [ 'VTXISONUMVTX', 'VTXISODCHI2ONETRACK', 'VTXISODCHI2MASSONETRACK', 'VTXISODCHI2TWOTRACK', 'VTXISODCHI2MASSTWOTRACK']:
-        reldict['RELINFO']['VtxIso_'+v] = {'varName':v,'Location':'VertexIsoInfo','Default':-1}
-
-    #add RelInfoVertexIsolationBDT
-    for v in [ 'VTXISOBDTHARDFIRSTVALUE', 'VTXISOBDTHARDSECONDVALUE', 'VTXISOBDTHARDTHIRDVALUE',]:
-        reldict['RELINFO']['VtxIsoBDT_'+v] = {'varName':v,'Location':'VertexIsoBDTInfo','Default':-1.}
+        #add RelInfoVertexIsolationBDT
+        for v in [ 'VTXISOBDTHARDFIRSTVALUE', 'VTXISOBDTHARDSECONDVALUE', 'VTXISOBDTHARDTHIRDVALUE',]:
+            reldict['RELINFO']['VtxIsoBDT_'+v] = {'varName':v,'Location':'VertexIsoBDTInfo','Default':-1.}
     
     return reldict
 
 def getLoKiTool(name,line,isMC=True,branch = None) :
 
-    lokiDict = getLoKiToolsDictionary()
+    lokiDict = getLoKiToolsDictionary(line)
+    stream = "Leptonic"
+    if 'D0D' in line : stream = "Bhadron"
 
     LoKi_Tool = LoKi__Hybrid__TupleTool('LoKi_Tool'+name)
     for vname, args in lokiDict['RELINFO'].iteritems():
         #if isMC : lokipath = '/AllStreams/Phys/'+line+'/'+args['Location']
         if isMC : lokipath = '/Event/Bu2KLL_NoPID_LongLived.Strip/Phys/'+line+'/'+args['Location']
-        else : lokipath = '/Event/Leptonic/Phys/'+line+'/'+args['Location']
+        else : lokipath = '/Event/'+stream+'/Phys/'+line+'/'+args['Location']
         LoKi_Tool.Variables[vname] = "RELINFO('%s','%s',%f)"%(lokipath,args['varName'],args['Default'])
     
     if branch is not None :

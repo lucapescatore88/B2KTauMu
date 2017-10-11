@@ -111,24 +111,6 @@ TupTmp.B.HltTISTOS.TriggerList = [
 	]
 TupTmp.B.HltTISTOS.Verbose = True
 
-from Configurables import TupleToolDecayTreeFitter
-TupTmp.B.addTool( TupleToolDecayTreeFitter, name = "DTF" )
-TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF" ]
-TupTmp.B.addTool( TupTmp.B.DTF.clone( "DTF_PV",
-                                      Verbose = True,
-                                      constrainToOriginVertex = True ) )
-TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF_PV" ]
-TupTmp.B.addTool( TupTmp.B.DTF.clone( "DTF_Tau_PV",
-                                      Verbose = True,
-                                      constrainToOriginVertex = True,
-                                      daughtersToConstrain = [ "tau+" ] ) )
-TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF_Tau_PV" ]
-TupTmp.B.addTool( TupTmp.B.DTF.clone( "DTF_B_PV",
-                                      Verbose = True,
-                                      constrainToOriginVertex = True,
-                                      daughtersToConstrain = [ "B+" ] ) )
-TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF_B_PV" ]
-
 # Adding loki functors
 
 from Configurables import LoKi__Hybrid__TupleTool
@@ -171,6 +153,81 @@ lokitau.Variables = {
 
 TupTmp.B.addTool(lokiB)
 TupTmp.tau.addTool(lokitau)
+
+## Add DecayTreeFitter
+
+from Configurables import TupleToolDecayTreeFitter
+TupTmp.B.addTool( TupleToolDecayTreeFitter, name = "DTF" )
+TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF" ]
+TupTmp.B.addTool( TupTmp.B.DTF.clone( "DTF_PV",
+                                      Verbose = True,
+                                      constrainToOriginVertex = True ) )
+TupTmp.B.addTool( TupTmp.B.DTF.clone( "DTF_B_PV",
+                                      Verbose = True,
+                                      constrainToOriginVertex = True,
+                                      daughtersToConstrain = [ "B+" ] ) )
+TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF_B_PV" ]
+
+TupTmpNorm = TupTmp.clone("Normalisation")
+
+TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF_PV" ]
+TupTmp.B.addTool( TupTmp.B.DTF.clone( "DTF_Tau_PV",
+                                      Verbose = True,
+                                      constrainToOriginVertex = True,
+                                      daughtersToConstrain = [ "tau+" ] ) )
+TupTmp.B.ToolList += [ "TupleToolDecayTreeFitter/DTF_Tau_PV" ]
+
+
+#### Normalisation tuple
+
+TupTmpNorm.addTool(TupleToolDecay, name="D0")
+#TupTmpNorm.addTool(TupleToolDecay, name="K")
+TupTmpNorm.addTool(TupleToolDecay, name="pi")
+TupTmpNorm.addTool(TupleToolDecay, name="D")
+TupTmpNorm.addTool(TupleToolDecay, name="K1")
+TupTmpNorm.addTool(TupleToolDecay, name="K2")
+TupTmpNorm.addTool(TupleToolDecay, name="piD")
+
+#from Configurables import TupleToolVtxIsoln
+#TupTmpNorm.B.addTool(TupleToolVtxIsoln, name="TupleToolVtxIsolnB")
+#TupTmpNorm.D0.addTool(TupleToolVtxIsoln, name="TupleToolVtxIsolnD0")
+#TupTmpNorm.D.addTool(TupleToolVtxIsoln, name="TupleToolVtxIsolnD")
+TupTmpNorm.B.ToolList += [ "TupleToolVtxIsoln" ]
+TupTmpNorm.D0.ToolList += [ "TupleToolVtxIsoln" ]
+TupTmpNorm.D.ToolList += [ "TupleToolVtxIsoln" ]
+
+TupTmpNorm.B.InheritTools = True
+TupTmpNorm.D0.InheritTools = True
+TupTmpNorm.D.InheritTools = True
+
+lokiD = LoKi__Hybrid__TupleTool("lokiD")
+lokiD0 = LoKi__Hybrid__TupleTool("lokiD0")
+TupTmpNorm.D.ToolList += ["LoKi::Hybrid::TupleTool/lokiD"]
+TupTmpNorm.D0.ToolList += ["LoKi::Hybrid::TupleTool/lokiD0"]
+
+lokiD.Variables = {
+           "DOCAKK"    : "DOCA(1,2)",
+           "DOCAK2pi"  : "DOCA(2,3)",
+           "DOCAK1pi"  : "DOCA(1,3)",
+           "DOCAMAX"   : "DOCAMAX",
+           "BPVVDCHI2" : "BPVVDCHI2",
+           "BPVVDRHO"  : "BPVVDRHO",
+           "BPVVDZ"    : "BPVVDZ",
+           "MKK"       : "M12",
+           "MK2pi"     : "M23",
+           "MK1pi"     : "M13" 
+                            }
+lokiD0.Variables = {
+           "DOCAKpi"   : "DOCA(1,2)",
+           "DOCAMAX"   : "DOCAMAX",
+           "BPVVDCHI2" : "BPVVDCHI2",
+           "BPVVDRHO"  : "BPVVDRHO",
+           "BPVVDZ"    : "BPVVDZ" 
+           }
+
+TupTmpNorm.D.addTool(lokiD)
+TupTmpNorm.D0.addTool(lokiD0)
+
 
 #from Configurables import TupleToolDocas
 #TupTmp.B.addTool( TupleToolDocas )

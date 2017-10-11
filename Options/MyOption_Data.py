@@ -12,6 +12,7 @@ import B2KTauMuOption as opt
 from DV_Config import ConfigDaVinci
 
 opt.setalgs()
-ConfigDaVinci("CL",16,opt.algs,Mag=test,RootInTES="Leptonic",isTest=isTest)
+#ConfigDaVinci("CL",16,opt.algs,Mag=test,RootInTES="Leptonic",isTest=isTest)
+ConfigDaVinci("CL",16,opt.algs,Mag=test,RootInTES="Bhadron",isTest=isTest)
 
 
