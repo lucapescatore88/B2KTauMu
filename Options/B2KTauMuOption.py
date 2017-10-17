@@ -32,9 +32,8 @@ def setalgs(isMC=False,decay='LEPTONIC') :
     global TupTmp, TupTmpMC
     if isMC : TupTmp = TupTmpMC
         
-    linePi  = "LFVB2PiTauMuLine"
-    lineK   = "LFVB2KTauMuLine"
-    lineXK  = "B2XTauMu_K_3pi_looseLine"
+    line    = "B2XTauMu_K_3pi_looseLine"
+    lineSS  = "B2XTauMu_K_3pi_loose_WSLine"
     lineDDs = "B2D0DBeauty2CharmLine" 
     
     #if decay.replace('Filtered_','') in ['Lb_Lee','Lb_Lemu','Lb_Lmm','Bd_Ksee','Bd_Ksmm']:
@@ -44,41 +43,29 @@ def setalgs(isMC=False,decay='LEPTONIC') :
     if isMC: inputname = "AllStreams/Phys/{0}/Particles"
     else: inputname = "Phys/{0}/Particles"
 
-    #LFVB2PiTauMuLine = TupTmp.clone("LFVB2PiTauMu")
-    #LFVB2PiTauMuLine.Inputs   = [ inputname.format(linePi) ]
-    #LFVB2PiTauMuLine.Decay    = "([B+ -> ^pi+ ^(tau+ -> ^pi+ ^pi- ^pi+) ^mu-]CC) || ([B+ -> ^pi+ ^(tau- -> ^pi- ^pi+ ^pi-) ^mu+ ]CC) || ([B+ -> ^pi- ^(tau+ -> ^pi+ ^pi- ^pi+) ^mu+]CC)"
-    #LFVB2PiTauMuLine.Branches = set_branches(LFVB2PiTauMuLine.Decay,branches)
-
-    #LoKi_ToolPi = getLoKiTool("K",linePi,isMC)
-    #LFVB2PiTauMuLine.B.ToolList += ["LoKi::Hybrid::TupleTool/LoKi_ToolPi"]
-    #LFVB2PiTauMuLine.B.addTool(LoKi_ToolPi)
-
-    #LFVB2KTauMuLine = TupTmp.clone("LFVB2KTauMu")
-    #LFVB2KTauMuLine.Inputs   = [ inputname.format(lineK) ]
-    #LFVB2KTauMuLine.Decay    = "([B+ -> ^K+ ^(tau+ -> ^pi+ ^pi- ^pi+) ^mu-]CC) || ([B+ -> ^K+ ^(tau- -> ^pi- ^pi+ ^pi-) ^mu+ ]CC) || ([B+ -> ^K- ^(tau+ -> ^pi+ ^pi- ^pi+) ^mu+]CC)"
-    #LFVB2KTauMuLine.Branches = set_branches(LFVB2KTauMuLine.Decay,branches) 
-
-    #LoKi_ToolK = getLoKiTool("K",lineK,isMC)
-    #LFVB2KTauMuLine.B.ToolList += ["LoKi::Hybrid::TupleTool/LoKi_ToolK"]
-    #LFVB2KTauMuLine.B.addTool(LoKi_ToolK)
-
     B2KTauMuLine_ppm = TupTmp.clone("B2KMuTau_ppmTuple")
-    B2KTauMuLine_ppm.Inputs   = [ inputname.format(lineXK) ]
+    B2KTauMuLine_ppm.Inputs   = [ inputname.format(line) ]
     B2KTauMuLine_ppm.Decay    = "[B+ -> ^(Delta(1600)++ -> ^K+ ^mu+) ^(tau- -> ^pi- ^pi+ ^pi-)]CC"
     B2KTauMuLine_ppm.Branches = set_branches(B2KTauMuLine_ppm.Decay,branches)
-    LoKi_Tool1 = getLoKiTool("1",lineXK,isMC,branch=B2KTauMuLine_ppm.B)
+    LoKi_Tool1 = getLoKiTool("1",line,isMC,branch=B2KTauMuLine_ppm.B)
     
     B2KTauMuLine_pmp = TupTmp.clone("B2KMuTau_pmpTuple")
-    B2KTauMuLine_pmp.Inputs   = [ inputname.format(lineXK) ]
+    B2KTauMuLine_pmp.Inputs   = [ inputname.format(line) ]
     B2KTauMuLine_pmp.Decay    = "[B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
     B2KTauMuLine_pmp.Branches = set_branches(B2KTauMuLine_pmp.Decay,branches)
-    LoKi_Tool2 = getLoKiTool("2",lineXK,isMC,branch=B2KTauMuLine_pmp.B)
+    LoKi_Tool2 = getLoKiTool("2",line,isMC,branch=B2KTauMuLine_pmp.B)
     
-    B2KTauMuLine_SS = TupTmp.clone("B2KMuTau_SSTuple")
-    B2KTauMuLine_SS.Inputs   = [ inputname.format(lineXK) ]
-    B2KTauMuLine_SS.Decay    = "[B+ -> ^(K*(1410)0 -> ^K- ^mu+) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
-    B2KTauMuLine_SS.Branches = set_branches(B2KTauMuLine_SS.Decay,branches)
-    LoKi_Tool3 = getLoKiTool("3",lineXK,isMC,branch=B2KTauMuLine_SS.B)
+    B2KTauMuLine_WS = TupTmp.clone("B2KMuTau_WSTuple")
+    B2KTauMuLine_WS.Inputs   = [ inputname.format(lineSS) ]
+    B2KTauMuLine_WS.Decay    = "[B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau- -> ^pi- ^pi+ ^pi-)]CC"
+    B2KTauMuLine_WS.Branches = set_branches(B2KTauMuLine_WS.Decay,branches)
+    LoKi_Tool3 = getLoKiTool("3",lineSS,isMC,branch=B2KTauMuLine_WS.B)
+
+    B2KTauMuLine_WS_ppp = TupTmp.clone("B2KMuTau_WS_pppTuple")
+    B2KTauMuLine_WS_ppp.Inputs   = [ inputname.format(lineSS) ]
+    B2KTauMuLine_WS_ppp.Decay    = "[B+ -> ^(Delta(1600)++ -> ^K+ ^mu+) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
+    B2KTauMuLine_WS_ppp.Branches = set_branches(B2KTauMuLine_WS.Decay,branches)
+    LoKi_Tool5 = getLoKiTool("5",lineSS,isMC,branch=B2KTauMuLine_WS_ppp.B)
 
     B2DDs = TupTmpNorm.clone("B2DDs_Kpi_Kpipi")
     B2DDs.Inputs   = [ inputname.format(lineDDs) ]
@@ -88,7 +75,7 @@ def setalgs(isMC=False,decay='LEPTONIC') :
  
 
     global algs
-    algs = [ B2KTauMuLine_ppm, B2KTauMuLine_pmp, B2KTauMuLine_SS, B2DDs ]
+    algs = [ B2KTauMuLine_ppm, B2KTauMuLine_pmp, B2KTauMuLine_WS, B2KTauMuLine_WS_ppp, B2DDs ]
 
     if not isMC : return
     

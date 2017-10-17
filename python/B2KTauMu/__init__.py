@@ -33,10 +33,16 @@ loc.LUCAANAEOS = os.getenv('LUCAANAEOSLOC')
 ### Raw data locations
 
 dataids = { 
+
         'CL11'        :(loc.LUCAJOBS, [602,603]),
         'CL12'        :(loc.LUCAJOBS, [604,605]),
         'CL15'        :(loc.LUCAJOBS, [610,607]),
         'CL16'        :(loc.LUCAJOBS, [608,609]),
+
+        'CL11_BH'        :(loc.LUCAJOBS, [642,643]),
+        'CL12_BH'        :(loc.LUCAJOBS, [644,645]),
+        'CL15_BH'        :(loc.LUCAJOBS, [646,647]),
+        'CL16_BH'        :(loc.LUCAJOBS, [648,649]),
 
         #'MCLc2pmm'     : [510,511], ##
           }
