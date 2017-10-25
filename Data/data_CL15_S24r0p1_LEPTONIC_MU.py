@@ -1,4 +1,4 @@
-#-- GAUDI jobOptions generated on Mon Jun 12 09:22:30 2017
+#-- GAUDI jobOptions generated on Tue Oct 17 14:06:57 2017
 #-- Contains event types : 
 #--   90000000 - 1380 files - 345087127 events - 3959.23 GBytes
 

@@ -34,6 +34,7 @@ ConfigDaVinci(dtype,{year},opt.algs,Mag='{mag}',RootInTES="Leptonic",restrip=[],
 def CreateJob(dataType,decay,year,mag,local = False) :
     
     jname = '{type}{year}_{dec}_{mag}'.format(dec=decay,year=year,type=dataType,mag=mag)
+    print "Preparing", jname
     j = Job(name = jname, backend=Dirac())
     if local : j.backend = Local()
     
@@ -69,9 +70,11 @@ def CreateJob(dataType,decay,year,mag,local = False) :
         return
 
     lfns = [ re.findall("LFN:.*?.dst",x)[0] for x in open(datafile).readlines() if 'LFN' in x and '#' not in x ]
+    #lfns = [ re.findall("/afs.*?dst",x)[0] for x in open(datafile).readlines() if '#' not in x and '/afs' in x ]
+    #if local : lfns = lfns[1:5]
+    print lfns
     dataset = LHCbDataset(lfns)
     j.inputdata = dataset
-    #j.inputdata = DaVinci(version='v41r3').readInputData(datafile)
     
     ### Finish initialisation
     j.inputfiles = options
@@ -82,9 +85,6 @@ def CreateJob(dataType,decay,year,mag,local = False) :
     j.outputfiles=[f]
     j.do_auto_resubmit = True
     
-    #avjobs[jname] = { 'id' : j.id, 'status' : 'new', 'merged' : False }
-    #DumpJobs(avjobs)
-
     return j
 
 def DumpTestOption() :
@@ -108,12 +108,12 @@ def SubmitAll(datatype = 'CL', years=[], mags = ['MU','MD'], decays = [], test =
 
     if datatype == 'CL' :
         #if years == []: years = ['11','12','15_S24r0p1','16_S28'] # Default years for data: all
-        if years == []: years = ['11','12','15_S24','16_S28']
+        if years == []: years = ['11','12']#,'15_S24','16_S28']
         for year in years :
             for mag in mags :
                 #j = CreateJob(datatype,'LEPTONIC',year,mag,test)
                 j = CreateJob(datatype,'BHADRON',year,mag,test)
-                print j
+                #print j
                 queues.add(j.submit)
     else :
         print "Submit MC"

@@ -47,8 +47,7 @@
 from Gaudi.Configuration import * 
 from GaudiConf import IOHelper
 IOHelper('ROOT').inputFiles([
-
-'LFN:/lhcb/LHCb/Collision12/LEPTONIC.MDST/00050929/0000/00050929_00000017_1.leptonic.mdst',
+'LFN:/lhcb/LHCb/Collision12/LEPTONIC.MDST/00024181/0000/00024181_00000010_1.leptonic.mdst'
 #'LFN:/lhcb/LHCb/Collision12/LEPTONIC.MDST/00050929/0000/00050929_00000030_1.leptonic.mdst',
 #'LFN:/lhcb/LHCb/Collision12/LEPTONIC.MDST/00050929/0000/00050929_00000045_1.leptonic.mdst',
 #'LFN:/lhcb/LHCb/Collision12/LEPTONIC.MDST/00050929/0000/00050929_00000057_1.leptonic.mdst',

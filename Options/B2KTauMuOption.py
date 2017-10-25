@@ -69,7 +69,8 @@ def setalgs(isMC=False,decay='LEPTONIC') :
 
     B2DDs = TupTmpNorm.clone("B2DDs_Kpi_Kpipi")
     B2DDs.Inputs   = [ inputname.format(lineDDs) ]
-    B2DDs.Decay    = "[ B+ -> ^(D0 -> ^K- ^pi+) ^(D+ -> ^K+ ^K- ^pi+) ]CC"
+    B2DDs.Decay    = "[ B+ -> ^(D~0 -> ^K+ ^pi-) ^(D+ -> ^K+ ^K- ^pi+) ]CC"
+    #B2DDs.Decay    = "[ B+ -> ^(D0 -> ^K- ^pi+) ^(D+ -> ^K+ ^K- ^pi+) ]CC"
     B2DDs.Branches = set_branches(B2DDs.Decay,branchesNorm)
     LoKi_Tool4 = getLoKiTool("4",lineDDs,isMC,branch=B2DDs.B)
  
