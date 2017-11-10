@@ -50,7 +50,7 @@ alias runganga='ganga -i $B2KTAUMUROOT/Ganga/gangaoption.py'
 ## Variables and aliases for snakemake
 
 #alias setpath='source $LCANAROOT/scripts/setup_path.sh'
-export PY2='/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/bin/python'
+export PY2=$B2KTAUMUROOT/python/venv/bin/python
 alias snakeclean='rm $(snakemake --summary | tail -n+2 | cut -f1)'
 
 #alias testDataTuple='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_Data.py $B2KTAUMUROOT/Data/local_data.py'
