@@ -11,6 +11,7 @@ make_and_test:
     - Lb2Lemu
 
   script:
+    - source /root/run_kinit.sh  
     - xrdfs root://eoslhcb.cern.ch ls /eos/lhcb/user/p/pluca
     - source setup.sh snake
     - snakemake test
