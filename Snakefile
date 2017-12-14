@@ -1,6 +1,6 @@
 
 shell.executable("/bin/bash")
-shell.prefix('cd $B2KTAUMUROOT && source setup.sh && ')
+shell.prefix('cd $B2KTAUMUROOT && source setup.sh venv && ')
 
 rule test :
     input  : ['python/test.py']
