@@ -7,7 +7,7 @@ set +u
 if [ "$1" == "snake" ]; then
     echo "Setup with snakemake"
     source activate snake
-elif [ "$1" != "env" ]; then 
+elif [ "$1" == "env" ]; then 
     echo "Setup without snakemake"
     source $B2KTAUMUROOT/scripts/setup_path.sh
     source $B2KTAUMUROOT/scripts/setup_venv.sh
