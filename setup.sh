@@ -4,16 +4,13 @@ export B2KTAUMUROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 set +u
 
 ## Setup with Snakemake or without
-if [ "$1" = "snake" ]; then
+if [ "$1" == "snake" ]; then
     echo "Setup with snakemake"
     source activate snake
-elif [[ $HOSTNAME != *"vm"* ]]; then #if I run on the virtual machine I want my own ROOT and python environment
+elif [ "$1" != "env" ]; then 
     echo "Setup without snakemake"
     source $B2KTAUMUROOT/scripts/setup_path.sh
     source $B2KTAUMUROOT/scripts/setup_venv.sh
-elif [[ $HOSTNAME == *"vm"* ]]; then
-    echo "Setup without snakemake on Guido's VM"
-    source $B2KTAUMUROOT/scripts/setup_path_guido.sh
 fi
 
 cd $B2KTAUMUROOT/pyutils
@@ -27,20 +24,11 @@ export PYTHONPATH=$B2KTAUMUROOT:$B2KTAUMUROOT/Option:$B2KTAUMUROOT/Ganga:$B2KTAU
 export LUCAANAEOSLOC=/eos/lhcb/user/p/pluca/Analysis/
 export RAPIDSIM_ROOT=$B2KTAUMUROOT/RapidSim
 
-#export LBTUPLELOC=$EOSANALOC/Lb2emu/Tuple/
 export LBLUCAJOBLOC=/eos/lhcb/user/p/pluca/ganga/
 
-#export SCRIPTS=$B2KTAUMUROOT/scripts
+export SCRIPTS=$B2KTAUMUROOT/scripts
 export PLOTS=$B2KTAUMUROOT/plots
 export TABLES=$B2KTAUMUROOT/tables
-
-## Ganga
-
-setupganga() {
-    if [ -z "$GANGASYSROOT" ]; then
-        source SetupProject.sh Ganga v602r3
-    fi
-}
 
 ## Aliases
 

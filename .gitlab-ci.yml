@@ -1,0 +1,20 @@
+stages:
+  - build
+
+before_script:
+  - git submodule update --init --recursive
+
+make_and_test:
+  image: analysisrunner
+  stage: build
+  tags: 
+    - Lb2Lemu
+
+  script:
+    - source scripts/setup_env.sh env
+    - source activate snake
+    - export PYTHONPATH=$B2KTAUMUROOT/python:$B2KTAUMUROOT/pyutils:$PYTHONPATH
+    - snakemake test
+    
+
+

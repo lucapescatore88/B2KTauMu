@@ -1,4 +1,11 @@
+sample = [1,5]
+
+shell.prefix('cd $B2KTAUMUROOT && source setup.sh && ')
+
 rule test :
     input  : ['python/test.py']
     output : ['log']
-    shell : "cd $B2KTAUMUROOT && source setup.sh XX && $PY2 {input}"
+    shell : "python {input}"
+
+
+
