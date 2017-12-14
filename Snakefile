@@ -1,3 +1,5 @@
+configfile : 'cfg.yml'
+print('CONFIGURATION:',config)
 
 shell.executable("/bin/bash")
 shell.prefix('cd $B2KTAUMUROOT && source setup.sh venv && ')
