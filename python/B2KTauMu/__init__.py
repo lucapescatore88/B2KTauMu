@@ -10,6 +10,7 @@ if os.getenv('B2KTAUMUROOT') is None :
 import ROOT
 import cuts
 import getdata as data
+import utils
 
 repo = os.getenv('B2KTAUMUROOT')
 ROOT.gROOT.ProcessLine('.x '+repo+'/LHCb/lhcbStyle.C')
@@ -39,8 +40,8 @@ dataids = {
         'CL15'        :(loc.LUCAJOBS, [610,607]),
         'CL16'        :(loc.LUCAJOBS, [608,609]),
 
-        'CL11_BH'        :(loc.LUCAJOBS, [642,643]),
-        'CL12_BH'        :(loc.LUCAJOBS, [644,645]),
+        'CL11_BH'        :(loc.LUCAJOBS, [691,692]),
+        'CL12_BH'        :(loc.LUCAJOBS, [693,694]),
         'CL15_BH'        :(loc.LUCAJOBS, [646,647]),
         'CL16_BH'        :(loc.LUCAJOBS, [648,649]),
 
