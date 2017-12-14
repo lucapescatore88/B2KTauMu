@@ -11,9 +11,8 @@ make_and_test:
     - Lb2Lemu
 
   script:
-#    - export B2KTAUMUROOT=$PWD
+    - xrdfs root://eoslhcb.cern.ch ls /eos/lhcb/user/p/pluca
     - source setup.sh snake
-#    - export PYTHONPATH=$B2KTAUMUROOT/python:$B2KTAUMUROOT/pyutils:$PYTHONPATH
     - snakemake test
     
 
