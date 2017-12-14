@@ -11,7 +11,7 @@ make_and_test:
     - Lb2Lemu
 
   script:
-    - source setup.sh env
+    - source setup.sh
     - source activate snake
     - export PYTHONPATH=$B2KTAUMUROOT/python:$B2KTAUMUROOT/pyutils:$PYTHONPATH
     - snakemake test
