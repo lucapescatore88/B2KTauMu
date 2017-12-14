@@ -3,8 +3,6 @@ stages:
 
 before_script:
   - git submodule update --init --recursive
-#  - source setup.sh venv
-#  - source $VENVSYS/bin/deactivate
 
 make_and_test:
   image: analysisrunner
@@ -13,11 +11,9 @@ make_and_test:
     - Lb2Lemu
 
   script:
-    - which python
-    - export B2KTAUMUROOT=$PWD
-    - source activate snake
-    - which python2.7
-    - export PYTHONPATH=$B2KTAUMUROOT/python:$B2KTAUMUROOT/pyutils:$PYTHONPATH
+#    - export B2KTAUMUROOT=$PWD
+    - source setup.sh snake
+#    - export PYTHONPATH=$B2KTAUMUROOT/python:$B2KTAUMUROOT/pyutils:$PYTHONPATH
     - snakemake test
     
 
