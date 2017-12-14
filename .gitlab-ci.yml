@@ -13,8 +13,10 @@ make_and_test:
     - Lb2Lemu
 
   script:
+    - which python
     - export B2KTAUMUROOT=$PWD
     - source activate snake
+    - which python2.7
     - export PYTHONPATH=$B2KTAUMUROOT/python:$B2KTAUMUROOT/pyutils:$PYTHONPATH
     - snakemake test
     
