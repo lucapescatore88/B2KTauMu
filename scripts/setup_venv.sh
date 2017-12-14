@@ -7,7 +7,7 @@ else
     echo
     echo "Creating    PYVENV     at $VENVSYS"
     echo
-    virtualenv -p `which python` $VENVSYS
+    virtualenv -p `which python2.7` $VENVSYS
     source $VENVSYS/bin/activate
     
     REQ=$B2KTAUMUROOT/python/venv_requirements.txt
