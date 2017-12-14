@@ -3,8 +3,8 @@ stages:
 
 before_script:
   - git submodule update --init --recursive
-  - source setup.sh venv
-  - source $VENVSYS/bin/deactivate
+#  - source setup.sh venv
+#  - source $VENVSYS/bin/deactivate
 
 make_and_test:
   image: analysisrunner
