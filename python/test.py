@@ -6,7 +6,7 @@ f = open('log','w')
 f.write(sys.version_info.__repr__())
 
 print ("Looking for libraries")
-import pyutils
+#import pyutils
 import ROOT
 
 f.write('\npyutils and ROOT imported ok\n')
