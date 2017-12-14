@@ -1,4 +1,5 @@
 
+shell.executable("/bin/bash")
 shell.prefix('cd $B2KTAUMUROOT && source setup.sh && ')
 
 rule test :
