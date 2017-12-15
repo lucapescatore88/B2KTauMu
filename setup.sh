@@ -10,7 +10,7 @@ if [ "$1" == "snake" ]; then
 elif [ "$1" == "venv" ]; then 
     echo "Setup without snakemake"
     source $B2KTAUMUROOT/scripts/setup_venv.sh
-elif [ "$1" == "pathenv" ]; then
+else
     source $B2KTAUMUROOT/scripts/setup_path.sh
     source $B2KTAUMUROOT/scripts/setup_venv.sh
 fi
