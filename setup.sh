@@ -8,9 +8,12 @@ if [ "$1" == "snake" ]; then
     echo "Setup with snakemake"
     source activate snake
 elif [ "$1" == "venv" ]; then 
-    echo "Setup without snakemake"
+    echo "Setup with venv"
     source $B2KTAUMUROOT/scripts/setup_venv.sh
+elif [ "$1" == "venv" ]; then
+    echo "Setup without snakemake, venv and cvmfs"
 else
+    echo "Setup with cvmfs"
     source $B2KTAUMUROOT/scripts/setup_path.sh
     source $B2KTAUMUROOT/scripts/setup_venv.sh
 fi

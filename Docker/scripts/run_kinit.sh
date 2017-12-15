@@ -1,0 +1,1 @@
+kinit -kt /root/mykey.keytab pluca
