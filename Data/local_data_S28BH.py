@@ -2,7 +2,7 @@ import os
 from Gaudi.Configuration import * 
 from GaudiConf import IOHelper
 IOHelper('ROOT').inputFiles(
-        ['/eos/lhcb/user/m/mmulder/Lb2Lee/DSTs/00051181_00036126_1.leptonic.mdst']
+        ['/eos/lhcb/user/p/pluca/Analysis/B2KTauMu/Data/CL16S28.bhadron.mdst']
         , clear=True)
 
 

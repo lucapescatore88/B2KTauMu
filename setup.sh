@@ -10,7 +10,7 @@ if [ "$1" == "snake" ]; then
 elif [ "$1" == "venv" ]; then 
     echo "Setup with venv"
     source $B2KTAUMUROOT/scripts/setup_venv.sh
-elif [ "$1" == "venv" ]; then
+elif [ "$1" == "none" ]; then
     echo "Setup without snakemake, venv and cvmfs"
 else
     echo "Setup with cvmfs"
@@ -43,10 +43,12 @@ alias runganga='ganga -i $B2KTAUMUROOT/Ganga/gangaoption.py'
 ## Variables and aliases for snakemake
 
 #alias setpath='source $LCANAROOT/scripts/setup_path.sh'
-export PY2=$B2KTAUMUROOT/python/venv/bin/python
 alias snakeclean='rm $(snakemake --summary | tail -n+2 | cut -f1)'
 
-#alias testDataTuple='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_Data.py $B2KTAUMUROOT/Data/local_data.py'
+alias testData_CL16LPT='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_DataLeptonic.py $B2KTAUMUROOT/Data/local_data_S28LPT.py'
+alias testData_CL12LPT='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_DataLeptonic.py $B2KTAUMUROOT/Data/local_data_S21LPT.py'
+alias testData_CL16BH='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_DataBhadron.py $B2KTAUMUROOT/Data/local_data_S28BH.py'
+alias testData_CL12BH='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_DataBhadron.py $B2KTAUMUROOT/Data/local_data_S21BH.py'
 #alias testMCTuple='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_MC.py $B2KTAUMUROOT/Data/local_MC.py'
 
 

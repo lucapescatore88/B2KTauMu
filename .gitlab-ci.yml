@@ -13,7 +13,7 @@ make_and_test:
   script:
     - source /root/run_kinit.sh  
     - source setup.sh snake
-    - snakemake test
+    - snakemake test --config cvmfs='False'
     
 
 

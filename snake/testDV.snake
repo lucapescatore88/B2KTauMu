@@ -1,0 +1,13 @@
+from glob import glob
+samples = ['S28LPT','S28BH','S21LPT','S21BH']
+
+rule testDV :
+    input  : glob('Options/*.py')
+    output : expand('DVNtuple_{sample}.root',sample=samples)
+    run : 
+        for sample in samples :
+            stream = 'Leptonic'
+            if 'BH' in sample : stream = 'Bhadron'
+            shell('lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_Data%s.py $B2KTAUMUROOT/Data/local_data_%s.py && mv DVNtuple.root DVNtuple_%s.root' % (stream,sample,sample) )
+
+

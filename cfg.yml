@@ -1,1 +1,2 @@
-test : False
+test : 'False'
+cvmfs : 'True'
