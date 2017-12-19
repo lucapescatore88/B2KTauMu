@@ -8,7 +8,7 @@ Contact: luca.pescatore@cern.ch, giulio.dujany@cern.ch
 
 Clone the repository.
 
-```git clone ssh://git@gitlab.cern.ch:7999/pluca/B2Ktaumu.git```
+```git clone --recursive ssh://git@gitlab.cern.ch:7999/pluca/B2Ktaumu.git```
 
 If you want to run interactively in testing mode (normal way to run).
 
@@ -60,19 +60,14 @@ See also python environment paragraph.
 
 Raw data (the output of the stripping) can be accessed using a provided function:
 
-```from B2KTauMu.getdata import get_data
-print get_data('CL11')
-{'B2KMuTau_pmpTuple': <ROOT.TChain object ("B2KMuTau_pmpTuple/DecayTree") at 0x5f965d0>, 'B2KMuTau_ppmTuple': <ROOT.TChain object ("B2KMuTau_ppmTuple/DecayTree") at 0x5fa5c00>, 'GetIntegratedLuminosity': <ROOT.TChain object ("GetIntegratedLuminosity/LumiTuple") at 0x5faad50>}```
+```import B2KTauMu as an
+files = an.utils.remote_ls_fromids(an.dataids['{some data label e.g. CL11}'])```
 
 To see the available datasets: 
 
 ```import B2KTauMu as an
 print an.dataids.keys()
 ['CL16', 'CL15', 'CL12', 'CL11']```
-
-To know more info about the physical location of the files and which tuples they contain:
-
-```print an.getdata.inspect('CL11')```
 
 ## B2KTauMu python environment (important!!)
 
@@ -106,36 +101,27 @@ an.db['myeff'] = 0.99
 dumpDB() ## Saves it to disk
 ```
 
-* Provide easy handling of output files, e.g.:
+* Provide easy handling of output files
 
-Create a file (only the first time)
-```
-import B2KTauMuEnv as an
-an.outfiles.create("yields")                ## Will create the $B2KTAUMUROOT/tables/yields.txt
-outfile.writeline("yields","N_B0 = 4000")   ## Now you can write stuff into it or... (see following)
-```
+```from Lb2LemuEnv import *
+outfiles.create("yields") ## Will create (only first time) the $LB2LEMUROOT/tables/yields.txt file and remember that it exists 
+outfile.writeline("yields","N_B0 = 4000")```
 
-Or even better use templates!!!
-
-   - Crate a .tmp file in the tables/templates folder. You can write whatever you want into it just put the values to substitute into {}
+Or even better you can do the same using templates!!! Crate a file in the templates folder. You can write whatever you want into it just put the values to substitute into {}
    
-   E.g.
-   ```
-   yield_signal = ${yield_sig} \pm {yield_sig_err}$
-   ```
+E.g.: `seleff = ${sel_eff} \pm {sel_eff_err}$`
    
-   And then fill it! (Will take by defulta the values saved in an.db)
+And then use the `db` object to fill it!!
 
-```
-import B2KTauMuEnv as an
-an.outfile.fill_template("efficiencies","eff_tmp")
-```
-  
-  This will look for the keys into the db, fill them into your template and same everything to $REPO/tables/efficiency.txt
+```from Lb2LemuEnv import *
+outfile.fill_template("efficiencies","eff_tmp",db)```
+ 
+This will look for the keys into the db, fill them into your template and same everything to $REPO/tables/efficiency.txt
+
+* Make available to every script any other variable you wish to define into it. 
 
 
-
-### Snakemake
+## Snakemake
 
 You can run the offline anaylsis (or parts of it) simply typing `snakemake`.
 The steps are defined into `Snakefile` in the top folder. See README_SNAKEMAKE for more details.
@@ -146,7 +132,9 @@ To run snakemake from a clean shell:
 source setup.ch snake
 snakemake
 ```
+## Docker
 
+Docker support is available for this repository to allow running the analysis on any machine anywhere in the world (with internet). Please have a look at the readme inside the Docker folder.
 
 ## Common utilities
 
