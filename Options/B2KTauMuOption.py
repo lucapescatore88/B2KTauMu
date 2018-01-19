@@ -24,6 +24,7 @@ from Configurables import DeterministicPrescaler
 
 branches = ["B","H","K","mu","tau","pi1","pi2","pi3"]
 branchesNorm = ["B","D0","K","pi","D","K1","K2","piD"]
+branchesMC = ["B","K","tau","pi1","pi2","pi3","mu"]
 
 algs = []
 
@@ -40,7 +41,7 @@ def setalgs(isMC=False,decay='LEPTONIC') :
     #    branches_MC     = branchesRareMC
     #else: branches_MC     = branches
 
-    if isMC: inputname = "AllStreams/Phys/{0}/Particles"
+    if isMC: inputname = "Phys/{0}/Particles"
     else: inputname = "Phys/{0}/Particles"
 
     B2KTauMuLine_ppm = TupTmp.clone("B2KMuTau_ppmTuple")
@@ -86,6 +87,6 @@ def setalgs(isMC=False,decay='LEPTONIC') :
 
     MCTuple          = MCTupTmp.clone("MCTuple")
     MCTuple.Decay    = '({0})'.format(decays_db[decay.replace('Filtered_', '')]['descriptor'])
-    MCTuple.Branches = set_branches(MCTuple.Decay,branchesX)
+    MCTuple.Branches = set_branches(MCTuple.Decay,branchesMC)
     algs += [ MCTuple ]
     

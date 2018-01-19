@@ -13,24 +13,6 @@ from glob import glob
 
 options = [ LocalFile( f ) for f in glob(root+"/Options/*.py") ]
 
-
-template = '''isTest = {isTest} #### CHANGE HERE
-
-dtype = 'CL'
-if {isMC} : dtype = 'MC'
-
-import os, sys
-root = os.getenv("B2KTAUMUROOT")
-if root is not None : sys.path.append( root+"/Options" )
-sys.path.append(os.getcwd())
-
-import B2KTauMuOption as opt
-from DV_Config import ConfigDaVinci
-
-opt.setalgs({isMC},'{decay}')
-ConfigDaVinci(dtype,{year},opt.algs,Mag='{mag}',RootInTES="Leptonic",restrip=[],isTest=isTest)
-'''
-
 def CreateJob(dataType,decay,year,mag,local = False) :
     
     jname = '{type}{year}_{dec}_{mag}'.format(dec=decay,year=year,type=dataType,mag=mag)
@@ -38,30 +20,23 @@ def CreateJob(dataType,decay,year,mag,local = False) :
     j = Job(name = jname, backend=Dirac())
     if local : j.backend = Local()
     
-    DaVinci_dirname = "./DaVinciDev_v42r3"
+    DaVinci_dirname = "./DaVinciDev_v42r7p1"
     if os.path.exists(DaVinci_dirname): 
         myApp = GaudiExec()
         myApp.directory = DaVinci_dirname
     else :
-        myApp = prepareGaudiExec('DaVinci','v42r3', myPath='.')
+        myApp = prepareGaudiExec('DaVinci','v42r7p1', myPath='.')
     j.application = myApp
     #j.applicaton.useGaudiRun = True
-    
-    ### Make option file
-    #if dataType == "MC" :
-    #    myoption = template.format(isMC='True', mag=mag, year=year, decay=decay , isTest = local)
-    #else :
-    #    myoption = template.format(isMC='False', mag=mag, year=year.split('_')[0], decay='LEPTONIC', isTest = local )
-
-    #foption = open('MyOption.py','w')
-    #foption.write(myoption)
-    #foption.close()
-    #j.application.options = ['$PWD/MyOption.py']
-    j.application.options = ['$B2KTAUMUROOT/Options/MyOption_Data.py']
+  
+    j.application.options = ['$B2KTAUMUROOT/Options/MyOption_DataLeptonic.py']
+    if decay == 'BHADRON' : j.application.options = ['$B2KTAUMUROOT/Options/MyOption_DataBhadron.py']
+    if dataType == "MC" : j.application.options = ['$B2KTAUMUROOT/Options/MyOption_MC.py']
+    print "Option: ", j.application.options
 
     ### Find data
     datafile = root+'/Data/'
-    if dataType == "MC": datafile += 'MC/';
+    if dataType == "MC": datafile += 'MC/'
     datafile += 'data_{dt}{y}_{decay}_{mag}.py'.format(
 	    dt=dataType,y=year,decay=decay,mag=mag)
     
@@ -70,9 +45,6 @@ def CreateJob(dataType,decay,year,mag,local = False) :
         return
 
     lfns = [ re.findall("LFN:.*?.dst",x)[0] for x in open(datafile).readlines() if 'LFN' in x and '#' not in x ]
-    #lfns = [ re.findall("/afs.*?dst",x)[0] for x in open(datafile).readlines() if '#' not in x and '/afs' in x ]
-    #if local : lfns = lfns[1:5]
-    print lfns
     dataset = LHCbDataset(lfns)
     j.inputdata = dataset
     
@@ -94,46 +66,49 @@ def DumpTestOption() :
     foption.write(myoption)
     foption.close()
 
-def SubmitS28() :
+def SubmitFast() :
     j = CreateJob('CL','LEPTONIC','16_S28','MU')
     j.submit()
-    j = CreateJob('CL','LEPTONIC','12','MU')
-    j.submit()
+    #j = CreateJob('CL','LEPTONIC','12','MU')
+    #j.submit()
     j = CreateJob('CL','LEPTONIC','16_S28','MD')
     j.submit()
-    j = CreateJob('CL','LEPTONIC','12','MD')
-    j.submit()
+    #j = CreateJob('CL','LEPTONIC','12','MD')
+    #j.submit()
 
 def SubmitAll(datatype = 'CL', years=[], mags = ['MU','MD'], decays = [], test = False) :
 
     if datatype == 'CL' :
-        #if years == []: years = ['11','12','15_S24r0p1','16_S28'] # Default years for data: all
-        if years == []: years = ['11','12']#,'15_S24','16_S28']
+        if years == []: years = ['12']#,'11','15_S24','16_S28']
         for year in years :
             for mag in mags :
-                #j = CreateJob(datatype,'LEPTONIC',year,mag,test)
-                j = CreateJob(datatype,'BHADRON',year,mag,test)
-                #print j
-                queues.add(j.submit)
-    else :
+                for dec in decays :
+                    j = CreateJob(datatype,dec,year,mag,test)
+                    queues.add(j.submit)
+        return
+    else : 
         print "Submit MC"
-	if decays == []: decays = decays_db # IF NO DECAYS ARE GIVEN, RUN OVER ALL DECAYS
-	for decay in decays:
-	    if years  == []: years_to_run  = decays_db[decay]['MC_samples'] # Default years for MC: what is available
-	    else:            years_to_run  = years
+    
+        
+        #j = CreateJob('MC','Bu2KTauMu','12','MU',test)
+        #j.submit()
+        #j = CreateJob('MC','Bu2KTauMu','12','MD',test)
+        #j.submit()
 
-	    for year in years_to_run:
-		for mag in mags:
-
-		    if test: 
-		        print "TEST"
-			print "Decay:  {0}".format(decay)
-			print " Year:  {0}".format(year)
-			print "  Mag:  {0}".format(mag)
-
-		    else:
-		        j = CreateJob(datatype,decay,year,mag,test)
-			queues.add(j.submit)
+        if decays == []: decays = decays_db # IF NO DECAYS ARE GIVEN, RUN OVER ALL DECAYS
+        for decay in decays:
+        if years  == []: years_to_run  = decays_db[decay]['MC_samples'] # Default years for MC: what is available
+        #    else:            years_to_run  = years
+   
+        for year in years_to_run:
+    	    for mag in mags :		    
+                if test :
+                    print "Decay:  {0}".format(decay)
+                    print "Year :  {0}".format(year)
+                    print "Mag  :  {0}".format(mag)
+                else:
+                   j = CreateJob(datatype,decay,year,mag,test)
+                   queues.add(j.submit)
 
 
 

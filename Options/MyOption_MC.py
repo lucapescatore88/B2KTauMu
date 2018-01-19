@@ -8,7 +8,16 @@ sys.path.append(os.getcwd())
 import B2KTauMuOption as opt
 from DV_Config import ConfigDaVinci
 
-opt.setalgs(True,'Lb_JpsiL_ee')
-ConfigDaVinci("MC",16,opt.algs,Mag='MD',restrip=[],isTest=isTest)
+from DV_Routines import ReStrip
+lines_to_restrip = [ 
+        'StrippingB2XTauMu_K_3pi_looseLine',
+        'StrippingB2XTauMu_K_3pi_looseWSLine'
+        ]
+
+restrip, restripSq = ReStrip(lines_to_restrip,"stripping21r0p1",streamname="Leptonic")
+
+opt.setalgs(True,'Bu2KTauMu')
+ConfigDaVinci("MC",12,opt.algs,Mag='MD',restrip=restripSq,isTest=isTest)
+
 
 

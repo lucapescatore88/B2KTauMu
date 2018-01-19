@@ -191,7 +191,7 @@ def RemoveJobs( start, stop = 0 ) :
 def SmartResubmitJob( jobID, force=0 ) :
 
     for sj in jobs( jobID ).subjobs :
-        if(sj.status != 'completed' and sj.status != 'submitted') :
+        if(sj.status != 'completed' and (sj.status != 'submitted' and sj.backend.actualCE is not None) ) :
             if( (sj.status != 'completing') or force > 0 ) :
                 if( (sj.status == 'running' and force > 1) or (sj.status != 'running') ) :
                     print 'Resubmitting SubJob... ('+sj.status+')'

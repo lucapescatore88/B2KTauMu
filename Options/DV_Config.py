@@ -31,10 +31,6 @@ def ConfigDaVinci(DataType,DataYear,UserAlgs=[],RootInTES="",isTest=False,Mag=""
     if DataType == "MC" :
     
         DaVinci().appendToMainSequence( restrip )
-        if RootInTES == "Bu2KLL_NoPID_LongLived.Strip": 
-            DaVinci().InputType = "MDST"
-            DaVinci().RootInTES = "/Event/"+RootInTES
-            print DaVinci().InputType, DaVinci().RootInTES
         if RootInTES == "":
             DaVinci().RootInTES = ""
             DaVinci().InputType = "DST"
@@ -48,7 +44,6 @@ def ConfigDaVinci(DataType,DataYear,UserAlgs=[],RootInTES="",isTest=False,Mag=""
         DaVinci().Simulation = True
         DaVinci().Lumi       = False
 
-        """
         TagDDDB              = "dddb-20150522"
         TagCondDB            = "sim-20150522"
         if DataYear == "11" :
@@ -64,8 +59,10 @@ def ConfigDaVinci(DataType,DataYear,UserAlgs=[],RootInTES="",isTest=False,Mag=""
             TagCondDB += "-mu100"
         DaVinci().DDDBtag   = "dddb-20150724" #BRUTAL TagDDDB
         DaVinci().CondDBtag = "sim-20161124-2-vc-mu100" #BRUTAL TagCondDB
+        
         """
         #above code replaced by tags dictionary, still under test
         from DV_Tags import get_MC_tag
         DaVinci().DDDBtag   = get_MC_tag(str(DataYear), Mag, "DDDB")
         DaVinci().CondDBtag = get_MC_tag(str(DataYear), Mag, "CONDDB")
+        """

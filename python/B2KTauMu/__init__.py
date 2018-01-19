@@ -43,7 +43,7 @@ dataids = {
         'CL11_BH'        :(loc.LUCAJOBS, [691,692]),
         'CL12_BH'        :(loc.LUCAJOBS, [693,694]),
         'CL15_BH'        :(loc.LUCAJOBS, [646,647]),
-        'CL16_BH'        :(loc.LUCAJOBS, [648,649]),
+        'CL16_BH'        :(loc.LUCAJOBS, [648,649])
 
         #'MCLc2pmm'     : [510,511], ##
           }

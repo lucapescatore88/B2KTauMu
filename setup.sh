@@ -49,6 +49,6 @@ alias testData_CL16LPT='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/
 alias testData_CL12LPT='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_DataLeptonic.py $B2KTAUMUROOT/Data/local_data_S21LPT.py'
 alias testData_CL16BH='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_DataBhadron.py $B2KTAUMUROOT/Data/local_data_S28BH.py'
 alias testData_CL12BH='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_DataBhadron.py $B2KTAUMUROOT/Data/local_data_S21BH.py'
-#alias testMCTuple='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_MC.py $B2KTAUMUROOT/Data/local_MC.py'
+alias testMCTuple='lb-run DaVinci/latest gaudirun.py $B2KTAUMUROOT/Options/MyOption_MC.py $B2KTAUMUROOT/Data/testMC.py'
 
 

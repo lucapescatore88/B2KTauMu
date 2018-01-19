@@ -52,8 +52,8 @@ def getLoKiTool(name,line,isMC=True,branch = None) :
 
     LoKi_Tool = LoKi__Hybrid__TupleTool('LoKi_Tool'+name)
     for vname, args in lokiDict['RELINFO'].iteritems():
-        #if isMC : lokipath = '/AllStreams/Phys/'+line+'/'+args['Location']
-        if isMC : lokipath = '/Event/Bu2KLL_NoPID_LongLived.Strip/Phys/'+line+'/'+args['Location']
+        if isMC : lokipath = 'Phys/'+line+'/'+args['Location']
+        #if isMC : lokipath = '/Event/Bu2KLL_NoPID_LongLived.Strip/Phys/'+line+'/'+args['Location']
         else : lokipath = '/Event/'+stream+'/Phys/'+line+'/'+args['Location']
         LoKi_Tool.Variables[vname] = "RELINFO('%s','%s',%f)"%(lokipath,args['varName'],args['Default'])
     
