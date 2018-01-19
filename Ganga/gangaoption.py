@@ -95,20 +95,23 @@ def SubmitAll(datatype = 'CL', years=[], mags = ['MU','MD'], decays = [], test =
         #j = CreateJob('MC','Bu2KTauMu','12','MD',test)
         #j.submit()
 
-        if decays == []: decays = decays_db # IF NO DECAYS ARE GIVEN, RUN OVER ALL DECAYS
+        #if decays == []: decays = decays_db # IF NO DECAYS ARE GIVEN, RUN OVER ALL DECAYS
+        decays = ['Bu2KTauMu3pi','Bu2KTauMu3pipi0']
+        
         for decay in decays:
-        if years  == []: years_to_run  = decays_db[decay]['MC_samples'] # Default years for MC: what is available
-        #    else:            years_to_run  = years
-   
-        for year in years_to_run:
-    	    for mag in mags :		    
-                if test :
-                    print "Decay:  {0}".format(decay)
-                    print "Year :  {0}".format(year)
-                    print "Mag  :  {0}".format(mag)
-                else:
-                   j = CreateJob(datatype,decay,year,mag,test)
-                   queues.add(j.submit)
+       
+            years_to_run  = years
+            if years  == []: years_to_run  = decays_db[decay]['MC_samples'] # Default years for MC: what is available
+            
+            for year in years_to_run:
+    	        for mag in mags :		    
+                    if test :
+                        print "Decay:  {0}".format(decay)
+                        print "Year :  {0}".format(year)
+                        print "Mag  :  {0}".format(mag)
+                    else:
+                        j = CreateJob(datatype,decay,year,mag,test)
+                        queues.add(j.submit)
 
 
 
