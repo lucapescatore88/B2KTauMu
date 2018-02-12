@@ -1,5 +1,5 @@
 import subprocess as sb
-import sys, re
+import sys, re, os
 
 xrootd = 'root://eoslhcb.cern.ch/'
 
@@ -52,6 +52,13 @@ def remote_ls_fromids(dataids) :
     locs = [ base + str(i) for i in ids ]
     return remotels(locs,levels=1,pattern='(.root)')
 
+if __name__ == '__main__' :
 
-        
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p","--path",default = None)
+    args = parser.parse_args()
+
+    remote_ls(path)
+
 

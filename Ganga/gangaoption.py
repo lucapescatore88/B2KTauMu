@@ -67,14 +67,14 @@ def DumpTestOption() :
     foption.close()
 
 def SubmitFast() :
-    j = CreateJob('CL','LEPTONIC','16_S28','MU')
-    j.submit()
-    #j = CreateJob('CL','LEPTONIC','12','MU')
+    #j = CreateJob('CL','LEPTONIC','16_S28','MU')
     #j.submit()
-    j = CreateJob('CL','LEPTONIC','16_S28','MD')
+    j = CreateJob('CL','LEPTONIC','12','MU')
     j.submit()
-    #j = CreateJob('CL','LEPTONIC','12','MD')
+    #j = CreateJob('CL','LEPTONIC','16_S28','MD')
     #j.submit()
+    j = CreateJob('CL','LEPTONIC','12','MD')
+    j.submit()
 
 def SubmitAll(datatype = 'CL', years=[], mags = ['MU','MD'], decays = [], test = False) :
 

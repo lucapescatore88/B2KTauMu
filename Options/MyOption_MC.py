@@ -16,7 +16,7 @@ lines_to_restrip = [
 
 restrip, restripSq = ReStrip(lines_to_restrip,"stripping21r0p1",streamname="Leptonic")
 
-opt.setalgs(True,'Bu2KTauMu')
+opt.setalgs(True,'Bu2KTauMu3pi')
 ConfigDaVinci("MC",12,opt.algs,Mag='MD',restrip=restripSq,isTest=isTest)
 
 

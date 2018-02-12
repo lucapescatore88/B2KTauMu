@@ -13,5 +13,5 @@ rule test :
     shell : "python {input} && cat log "
 
 include : "snake/testDV.snake"
-
+include : "snake/cut.snake"
 

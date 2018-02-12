@@ -12,6 +12,9 @@ elif [ "$1" == "venv" ]; then
     source $B2KTAUMUROOT/scripts/setup_venv.sh
 elif [ "$1" == "none" ]; then
     echo "Setup without snakemake, venv and cvmfs"
+elif [ "$1" == "novenv" ]; then
+    echo "Setup without venv"
+    source $B2KTAUMUROOT/scripts/setup_path.sh
 else
     echo "Setup with cvmfs"
     source $B2KTAUMUROOT/scripts/setup_path.sh

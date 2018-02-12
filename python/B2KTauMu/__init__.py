@@ -4,7 +4,7 @@ import warnings
 warnings.filterwarnings( action='ignore', category=RuntimeWarning, message='creating converter.*' )
 
 if os.getenv('B2KTAUMUROOT') is None :
-    print "Attention, you did not setup. Run 'source setup.sh' before doing anything"
+    print ("Attention, you did not setup. Run 'source setup.sh' before doing anything")
     sys.exit()
 
 import ROOT
@@ -13,45 +13,10 @@ import getdata as data
 import utils
 
 repo = os.getenv('B2KTAUMUROOT')
-ROOT.gROOT.ProcessLine('.x '+repo+'/LHCb/lhcbStyle.C')
+from pyutils.LHCb.LHCbStyle import set_lhcbStyle
+set_lhcbStyle()
 
-#from utils.cut_converter import CutConverter
-#cuts = CutConverter(os.getenv('B2KTAUMUROOT')+'/cpp/include/Lb2LemuAnaCuts.hpp')
-
-################## Location in repository or on EOS
-
-class loc : pass
-loc.ROOT       = repo
-loc.PYTHON     = loc.ROOT+'/python/'
-loc.PLOTS      = loc.ROOT+'/plots/'
-loc.LHCB       = loc.ROOT+'/LHCb/'
-loc.TMPS       = loc.ROOT+'/tables/templates/'
-loc.TABS       = loc.ROOT+'/tables/'
-loc.TUPLE      = os.getenv('LBTUPLELOC')
-loc.LUCAJOBS   = os.getenv('LBLUCAJOBLOC')
-loc.LUCAANAEOS = os.getenv('LUCAANAEOSLOC')
-
-### Raw data locations
-
-dataids = { 
-
-        'CL11'           :(loc.LUCAJOBS, [602,603]),
-        'CL12'           :(loc.LUCAJOBS, [604,605]),
-        'CL15'           :(loc.LUCAJOBS, [610,607]),
-        'CL16'           :(loc.LUCAJOBS, [608,609]),
-
-        'CL11_BH'        :(loc.LUCAJOBS, [691,692]),
-        'CL12_BH'        :(loc.LUCAJOBS, [693,694]),
-        'CL15_BH'        :(loc.LUCAJOBS, [646,647]),
-        'CL16_BH'        :(loc.LUCAJOBS, [648,649]),
-
-        'MC12_Bu2KTauMu3pi'    : (loc.LUCAJOBS, [734,735]),
-        'MC11_Bu2KTauMu3pi'    : (loc.LUCAJOBS, [749,750]),
-        'MC12_Bu2KTauMu3pipi0' : (loc.LUCAJOBS, [751,752]),
-        'MC11_Bu2KTauMu3pipi0' : (loc.LUCAJOBS, [753,754])
-
-          }
-
+from locations import loc, dataids
 
 ################# Values database and outputfiles
 

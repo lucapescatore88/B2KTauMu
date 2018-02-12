@@ -1,0 +1,31 @@
+from locations import dataids
+from datetime import datetime as dt
+trees = str(config['tree']).replace(" ","")
+import checkbatch
+
+rule cutSamples :
+    input  : 
+        batchexe = "python/B2KTauMu/utils/cut_tree.py",
+        exe = "python/B2KTauMu/utils/cut_trees.py"
+    output : ["logs/cut.pkl"]
+    run    :
+
+        db = {}
+        if os.path.exists(output[0]) :
+            db = pickle.loads(open(output[0],'rb'))
+        
+        types = dataids.keys()
+        if config['sample'] is not None :
+            types = [ x for x in dataids.keys() if config['sample'] in x ]
+        
+        for d in types :
+            if config['cuts'] == 'False' : continue
+            db[d] = dt.now().__str__()
+            shell( "python {input.exe} %s --odir %s --tree %s" % (d,config['tup'],trees) )
+
+        def endmsg() : print ('\nAll jobs done')
+        checkbatch.wait_batch(types,endmsg)
+        pickle.dump(db,open(output[0],"wb"))
+
+
+

@@ -1,2 +1,16 @@
 test : 'False'
 cvmfs : 'True'
+cuts    : 'True' 
+
+tree    : ['B2KTauMu_pmpTuple/DecayTree','B2KTauMu_ppmTuple/DecayTree']
+tup     : '/afs/cern.ch/work/p/pluca/test'
+odir    : '/afs/cern.ch/work/p/pluca/test'
+mcevts : -1
+dataevts : -1
+dtypes  : 
+    - 'CL16'
+    - 'CL15'
+    - 'CL11'
+    - 'CL12'
+
+sample : 'MC12_Bu2KTauMu3pi'
