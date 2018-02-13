@@ -26,7 +26,7 @@ for fi,f in enumerate(files) :
     opts.command = cmd.format(tree=opts.tree.replace(" ",""),files=f,nevt=opts.nevt,dtype=opts.dtype,odir=opts.odir,nick=str(fi))
     if opts.test : opts.command += " --test "
     opts.abspath = True
-    opts.setup = "export CDIR=$PWD && source $B2KTAUMUROOT/scripts/setup.sh novenv && cd $CDIR "
+    opts.setup = "export CDIR=$PWD && source $B2KTAUMUROOT/setup.sh && cd $CDIR "
     
     ids = re.findall(r'/(\d+)/(\d+)/',f)
     opts.basedir = opts.odir

@@ -9,7 +9,7 @@ parser.add_argument("-v","--verbose",action="store_true")
 args = parser.parse_args()
 
 locs = [ dataids[args.decay][0]+str(i) for i in dataids[args.decay][1] ]
-datafiles = remotels(locs,levels=1,pattern=".root")
+datafiles = remotels(locs,levels=1,pattern=".root",backend="local")
 if args.verbose : print datafiles
 
 c = r.TCanvas()

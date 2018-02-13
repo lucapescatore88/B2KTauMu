@@ -2,9 +2,9 @@ test : 'False'
 cvmfs : 'True'
 cuts    : 'True' 
 
-tree    : ['B2KTauMu_pmpTuple/DecayTree','B2KTauMu_ppmTuple/DecayTree']
-tup     : '/afs/cern.ch/work/p/pluca/test'
-odir    : '/afs/cern.ch/work/p/pluca/test'
+tree    : ['B2KMuTau_pmpTuple/DecayTree','B2KMuTau_ppmTuple/DecayTree']
+tup     : '/eos/lhcb/user/p/pluca/Analysis/B2KTauMu/'
+odir    : '/eos/lhcb/user/p/pluca/Analysis/B2KTauMu/'
 mcevts : -1
 dataevts : -1
 dtypes  : 
@@ -13,4 +13,4 @@ dtypes  :
     - 'CL11'
     - 'CL12'
 
-sample : 'MC12_Bu2KTauMu3pi'
+sample : 

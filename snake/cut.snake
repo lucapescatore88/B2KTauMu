@@ -2,6 +2,7 @@ from locations import dataids
 from datetime import datetime as dt
 trees = str(config['tree']).replace(" ","")
 import checkbatch
+import pickle
 
 rule cutSamples :
     input  : 

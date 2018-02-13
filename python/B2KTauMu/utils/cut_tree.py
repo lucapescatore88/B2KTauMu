@@ -21,7 +21,7 @@ def cut(dtype,nick,nevt,tree,files,odir,test):
         tree = r.TChain(tname)
         for f in files : tree.AddFile(f)
         
-        cut = TCut("")      
+        cut = r.TCut("")      
         cut.Print()
         
         try :

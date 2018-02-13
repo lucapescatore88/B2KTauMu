@@ -44,23 +44,23 @@ def setalgs(isMC=False,decay='LEPTONIC') :
     if isMC: inputname = "Phys/{0}/Particles"
     else: inputname = "Phys/{0}/Particles"
 
-    B2KTauMuLine_ppm = TupTmp.clone("B2KMuTau_ppmTuple")
-    B2KTauMuLine_ppm.Inputs   = [ inputname.format(line) ]
-    B2KTauMuLine_ppm.Decay    = "[B+ -> ^(Delta(1600)++ -> ^K+ ^mu+) ^(tau- -> ^pi- ^pi+ ^pi-)]CC"
-    B2KTauMuLine_ppm.Branches = set_branches(B2KTauMuLine_ppm.Decay,branches)
-    LoKi_Tool1 = getLoKiTool("1",line,isMC,branch=B2KTauMuLine_ppm.B)
+    B2KTauMuLine = TupTmp.clone("B2KMuTauTuple")
+    B2KTauMuLine.Inputs   = [ inputname.format(line) ]
+    B2KTauMuLine.Decay    = "([B+ -> ^(Delta(1600)++ -> ^K+ ^mu+) ^(tau- -> ^pi- ^pi+ ^pi-)]CC) || ([B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau- -> ^pi- ^pi+ ^pi-)]CC)"
+    B2KTauMuLine.Branches = set_branches(B2KTauMuLine.Decay,branches)
+    LoKi_Tool1 = getLoKiTool("1",line,isMC,branch=B2KTauMuLine.B)
     
-    B2KTauMuLine_pmp = TupTmp.clone("B2KMuTau_pmpTuple")
-    B2KTauMuLine_pmp.Inputs   = [ inputname.format(line) ]
-    B2KTauMuLine_pmp.Decay    = "[B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
-    B2KTauMuLine_pmp.Branches = set_branches(B2KTauMuLine_pmp.Decay,branches)
-    LoKi_Tool2 = getLoKiTool("2",line,isMC,branch=B2KTauMuLine_pmp.B)
+    #B2KTauMuLine_pmp = TupTmp.clone("B2KMuTau_pmpTuple")
+    #B2KTauMuLine_pmp.Inputs   = [ inputname.format(line) ]
+    #B2KTauMuLine_pmp.Decay    = "[B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau+ -> ^pi+ ^pi- ^pi+)]CC"
+    #B2KTauMuLine_pmp.Branches = set_branches(B2KTauMuLine_pmp.Decay,branches)
+    #LoKi_Tool2 = getLoKiTool("2",line,isMC,branch=B2KTauMuLine_pmp.B)
     
-    B2KTauMuLine_WS = TupTmp.clone("B2KMuTau_WSTuple")
+    B2KTauMuLine_WS = TupTmp.clone("B2KMuTau_WS_pmmTuple")
     B2KTauMuLine_WS.Inputs   = [ inputname.format(lineSS) ]
     B2KTauMuLine_WS.Decay    = "[B+ -> ^(K*(1410)0 -> ^K+ ^mu-) ^(tau- -> ^pi- ^pi+ ^pi-)]CC"
     B2KTauMuLine_WS.Branches = set_branches(B2KTauMuLine_WS.Decay,branches)
-    LoKi_Tool3 = getLoKiTool("3",lineSS,isMC,branch=B2KTauMuLine_WS.B)
+    LoKi_Tool4 = getLoKiTool("3",lineSS,isMC,branch=B2KTauMuLine_WS.B)
 
     B2KTauMuLine_WS_ppp = TupTmp.clone("B2KMuTau_WS_pppTuple")
     B2KTauMuLine_WS_ppp.Inputs   = [ inputname.format(lineSS) ]
@@ -77,7 +77,7 @@ def setalgs(isMC=False,decay='LEPTONIC') :
  
 
     global algs
-    algs = [ B2KTauMuLine_ppm, B2KTauMuLine_pmp, B2KTauMuLine_WS, B2KTauMuLine_WS_ppp, B2DDs ]
+    algs = [ B2KTauMuLine, B2KTauMuLine_WS, B2KTauMuLine_WS_ppp, B2DDs ]
 
     if not isMC : return
     

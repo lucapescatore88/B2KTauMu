@@ -1,5 +1,5 @@
 ## Define root variable
-export B2KTAUMUROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export B2KTAUMUROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
 set +u
 
