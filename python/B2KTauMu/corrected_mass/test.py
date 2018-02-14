@@ -4,11 +4,13 @@ import ROOT as r
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
-parser.add_argument("-d","--decay",default = "MC12_Bu2KTauMu3pi")
-parser.add_argument("-v","--verbose",action="store_true")
+parser.add_argument("-d","--decay", default  = "MC12_Bu2KTauMu3pi")
+parser.add_argument("-v","--verbose", action = "store_true")
+parser.add_argument("-i","--inpt", default  = None)
 args = parser.parse_args()
 
-locs = [ dataids[args.decay][0]+str(i) for i in dataids[args.decay][1] ]
+if args.inpt is None : args.inpt = dataids[args.decay][0]
+locs = [ args.inpt+str(i) for i in dataids[args.decay][1] ]
 datafiles = remotels(locs,levels=1,pattern=".root",backend="local")
 if args.verbose : print datafiles
 

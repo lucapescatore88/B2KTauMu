@@ -9,7 +9,6 @@ if os.getenv('B2KTAUMUROOT') is None :
 
 import ROOT
 import cuts
-import getdata as data
 import utils
 
 repo = os.getenv('B2KTAUMUROOT')
