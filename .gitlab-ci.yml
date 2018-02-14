@@ -11,7 +11,7 @@ make_and_test:
     - Lb2Lemu
 
   script:
-    - source /root/run_kinit.sh  
+    - source /root/run_kinit.sh
     - source scripts/setup.sh snake
     - snakemake test --config cvmfs='False'
     
