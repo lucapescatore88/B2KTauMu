@@ -7,7 +7,11 @@ elif [ "$1" != "snake" ]; then
        echo "Compiling tools"
        cd $B2KTAUMUROOT/tools-easyanalysis
        unset TOOLSSYS
-       source scripts/setup_env.sh
+       if [ "$1" == "venv" ]; then
+           source scripts/setup_env.sh
+       else 
+           source scripts/setup.sh
+       fi
        make shared
        cd $B2KTAUMUROOT
 fi
