@@ -6,9 +6,11 @@ if [ -e $B2KTAUMUROOT/tools-easyanalysis/lib/libtools.so ]
        echo "Tools already compiled"
    else
        echo "Compiling tools"
+       echo $1
+       source scripts/setup.sh $1
        cd $B2KTAUMUROOT/tools-easyanalysis
        unset TOOLSSYS
-       source scripts/setup.sh $1
+       source scripts/setup.sh
        make shared
        cd $B2KTAUMUROOT
 fi
