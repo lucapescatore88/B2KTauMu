@@ -1,6 +1,19 @@
 ## Define root variable
 export B2KTAUMUROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
+if [ -e $B2KTAUMUROOT/tools-easyanalysis/lib/libtools.so ]
+   then
+       echo "Tools already compiled"
+   else
+       echo "Compiling tools"
+       cd $B2KTAUMUROOT/tools-easyanalysis
+       unset TOOLSSYS
+       source scripts/setup.sh
+       make shared
+       cd $B2KTAUMUROOT
+fi
+
+
 set +u
 
 ## Setup with Snakemake or without
@@ -10,15 +23,28 @@ if [ "$1" == "snake" ]; then
 elif [ "$1" == "venv" ]; then 
     echo "Setup with venv"
     source $B2KTAUMUROOT/scripts/setup_venv.sh
+    cd $B2KTAUMUROOT/tools-easyanalysis
+    unset TOOLSSYS
+    source scripts/setup.sh
+    cd $B2KTAUMUROOT
 elif [ "$1" == "none" ]; then
     echo "Setup without snakemake, venv and cvmfs"
 elif [ "$1" == "novenv" ]; then
     echo "Setup without venv"
     source $B2KTAUMUROOT/scripts/setup_path.sh
+    cd $B2KTAUMUROOT/tools-easyanalysis
+    unset TOOLSSYS
+    source scripts/setup.sh
+    cd $B2KTAUMUROOT
 else
     echo "Setup with cvmfs"
     source $B2KTAUMUROOT/scripts/setup_path.sh
     source $B2KTAUMUROOT/scripts/setup_venv.sh
+    cd $B2KTAUMUROOT/tools-easyanalysis
+    unset TOOLSSYS
+    source scripts/setup.sh
+    cd $B2KTAUMUROOT
+
 fi
 
 cd $B2KTAUMUROOT/pyutils
