@@ -14,7 +14,7 @@ f.write('Trying to read some files from eos\n')
 
 print ("Looking for files")
 import B2KTauMu as an
-files = an.utils.remote_ls_fromids(an.dataids['CL11'])
+files = an.utils.remotels.remote_ls_fromids(an.dataids['CL11'])
 f.write("Found %i files\n" % len(files))
 f.write('\n'.join(files))
 f.close()
