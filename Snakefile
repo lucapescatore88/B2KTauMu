@@ -3,9 +3,9 @@ print('CONFIGURATION:',config)
 
 shell.executable("/bin/bash")
 if config['cvmfs'] == 'True' :
-    shell.prefix('cd $B2KTAUMUROOT && source setup.sh && ')
+    shell.prefix('cd $B2KTAUMUROOT && source scripts/setup.sh && ')
 else :
-    shell.prefix('cd $B2KTAUMUROOT && source setup.sh venv && ')
+    shell.prefix('cd $B2KTAUMUROOT && source scripts/setup.sh venv && ')
 
 rule test :
     input  : ['python/test.py']
