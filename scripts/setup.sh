@@ -1,10 +1,9 @@
 ## Define root variable
 export B2KTAUMUROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
-if [ -e $B2KTAUMUROOT/tools-easyanalysis/lib/libtools.so ]
-   then
+if [ -e $B2KTAUMUROOT/tools-easyanalysis/lib/libtools.so ]; then
        echo "Tools already compiled"
-   else
+elif [ "$1" != "snake" ]; then
        echo "Compiling tools"
        echo $1
        source scripts/setup.sh $1
