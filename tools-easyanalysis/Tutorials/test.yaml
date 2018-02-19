@@ -1,0 +1,24 @@
+
+name: 'TestAna'
+title: 'Test'
+units: 'MeV/c^{2}'
+
+datatree : None
+datafile : None
+
+var :
+    name : 'Lb_MM'
+    min  : 4500
+    max  : 6000
+
+sig : 
+    pdf : 'Gauss-m[5620,5550,5700]-s[20,0,100]'
+    params:
+        m : 'gauss 5620 0.1'
+        s : 'gauss 20 1'
+
+bkgs :
+    - Comb : 
+        pdf : 'Exp-b[-0.001,-0.5,0]'
+
+ 
