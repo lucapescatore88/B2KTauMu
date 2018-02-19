@@ -1,6 +1,0 @@
-[submodule "pyutils"]
-	path = pyutils
-	url = ssh://git@gitlab.cern.ch:7999/LHCb-RD/pyutils.git
-[submodule "tools-easyanalysis"]
-	path = tools-easyanalysis
-	url = ssh://git@gitlab.cern.ch:7999/LHCb-RD/tools-easyanalysis.git
