@@ -2,7 +2,7 @@
 
 This is a repository containing code for the analyis of the LFV B2KTauMu decay.
 
-Contact: luca.pescatore@cern.ch, giulio.dujany@cern.ch
+Contact: luca.pescatore@cern.ch
 
 ## How to setup the repository
 
